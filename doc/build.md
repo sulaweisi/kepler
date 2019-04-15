@@ -1,6 +1,6 @@
 # Kepler - Build, Configuration, and Running
 
-*Read this in other languages: [Español](build_ES.md).*
+_Read this in other languages: [Español](build_ES.md), [Korean](build_KR.md), [日本語](build_JP.md)._
 
 ## Supported Platforms
 
@@ -9,20 +9,20 @@ Kepler's programming language `rust` has build targets for most platforms.
 
 What's working so far?
 
-* Linux x86\_64 and macOS [kepler + mining + development]
-* Not Windows 10 yet [kepler kind-of builds. No mining yet. Help wanted!]
+- Linux x86_64 and macOS [kepler + mining + development]
+- Not Windows 10 yet [kepler kind-of builds. No mining yet. Help wanted!]
 
 ## Requirements
 
-* rust 1.31+ (use [rustup]((https://www.rustup.rs/))- i.e. `curl https://sh.rustup.rs -sSf | sh; source $HOME/.cargo/env`)
-  * if rust is already installed, you can simply update version with `rustup update`
-* clang
-* ncurses and libs (ncurses, ncursesw5)
-* zlib libs (zlib1g-dev or zlib-devel)
-* pkg-config
-* libssl-dev
-* linux-headers (reported needed on Alpine linux)
-* llvm
+- rust 1.31+ (use [rustup](<(https://www.rustup.rs/)>)- i.e. `curl https://sh.rustup.rs -sSf | sh; source $HOME/.cargo/env`)
+  - if rust is already installed, you can simply update version with `rustup update`
+- clang
+- ncurses and libs (ncurses, ncursesw5)
+- zlib libs (zlib1g-dev or zlib-devel)
+- pkg-config
+- libssl-dev
+- linux-headers (reported needed on Alpine linux)
+- llvm
 
 For Debian-based distributions (Debian, Ubuntu, Mint, etc), all in one line (except Rust):
 
@@ -57,7 +57,7 @@ See [Troubleshooting](https://github.com/keplernetwork/docs/wiki/Troubleshooting
 
 A successful build gets you:
 
-* `target/release/kepler` - the main kepler binary
+- `target/release/kepler` - the main kepler binary
 
 All data, configuration and log files created and used by kepler are located in the hidden
 `~/.kepler` directory (under your user home directory) by default. You can modify all configuration
@@ -107,6 +107,7 @@ kepler client help
 ```sh
 docker build -t kepler -f etc/Dockerfile .
 ```
+
 For floonet, use `etc/Dockerfile.floonet` instead
 
 You can bind-mount your kepler cache to run inside the container.
@@ -114,6 +115,7 @@ You can bind-mount your kepler cache to run inside the container.
 ```sh
 docker run -it -d -v $HOME/.kepler:/root/.kepler kepler
 ```
+
 If you prefer to use a docker named volume, you can pass `-v dotkepler:/root/.kepler` instead.
 Using a named volume copies default configurations upon volume creation
 
@@ -137,4 +139,4 @@ Please note that all mining functions for Kepler have moved into a separate, sta
 you can start mining by building and running kepler-miner against your running Kepler node.
 
 For kepler-miner to be able to communicate with your kepler node, make sure that you have `enable_stratum_server = true`
-in your `kepler-server.toml` configuration file and you have a wallet listener running (`kepler wallet listen`). 
+in your `kepler-server.toml` configuration file and you have a wallet listener running (`kepler wallet listen`).

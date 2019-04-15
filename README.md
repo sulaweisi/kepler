@@ -38,7 +38,7 @@ To get involved, read our contributing docs.
 Telegram: http://t.me/keplernetwork
 Twitter Network Project: @keplernetwork
 Reddit: https://www.reddit.com/r/keplernetwork
-Discord: 
+Discord:
 
 ## Getting Started
 

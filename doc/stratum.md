@@ -1,16 +1,18 @@
 # Kepler Stratum RPC Protocol
 
+_Read this in other languages: [Korean](stratum_KR.md)._
+
 This document describes the current Stratum RPC protocol implemented in Kepler.
 
 ## Table of Contents
 
 1. [Messages](#messages)
-    1. [getjobtemplate](#getjobtemplate)
-    1. [job](#job)
-    1. [keepalive](#keepalive)
-    1. [login](#login)
-    1. [status](#status)
-    1. [submit](#submit)
+   1. [getjobtemplate](#getjobtemplate)
+   1. [job](#job)
+   1. [keepalive](#keepalive)
+   1. [login](#login)
+   1. [status](#status)
+   1. [submit](#submit)
 1. [Error Messages](#error-messages)
 1. [Miner Behavior](#miner-behavior)
 1. [Reference Implementation](#reference-implementation)
@@ -21,21 +23,21 @@ In this section, we detail each message and the potential response.
 
 At any point, if miner the tries to do one of the following request (except login) and login is required, the miner will receive the following error message.
 
-| Field         | Content                                 |
-| :------------ | :-------------------------------------- |
-| id            | ID of the request                       |
-| jsonrpc       | "2.0"                                   |
-| method        | method sent by the miner                |
-| error         | {"code":-32500,"message":"login first"} |
+| Field   | Content                                 |
+| :------ | :-------------------------------------- |
+| id      | ID of the request                       |
+| jsonrpc | "2.0"                                   |
+| method  | method sent by the miner                |
+| error   | {"code":-32500,"message":"login first"} |
 
 Example:
 
 ```JSON
-{  
+{
    "id":"10",
    "jsonrpc":"2.0",
    "method":"getjobtemplate",
-   "error":{  
+   "error":{
       "code":-32500,
       "message":"login first"
    }
@@ -44,21 +46,21 @@ Example:
 
 if the request is not one of the following, the stratum server will give this error response:
 
-| Field         | Content                                      |
-| :------------ | :------------------------------------------- |
-| id            | ID of the request                            |
-| jsonrpc       | "2.0"                                        |
-| method        | method sent by the miner                     |
-| error         | {"code":-32601,"message":"Method not found"} |
+| Field   | Content                                      |
+| :------ | :------------------------------------------- |
+| id      | ID of the request                            |
+| jsonrpc | "2.0"                                        |
+| method  | method sent by the miner                     |
+| error   | {"code":-32601,"message":"Method not found"} |
 
 Example:
 
 ```JSON
-{  
+{
    "id":"10",
    "jsonrpc":"2.0",
    "method":"getkeplers",
-   "error":{  
+   "error":{
       "code":-32601,
       "message":"Method not found"
    }
@@ -72,17 +74,17 @@ Miner can request a job with this message.
 
 #### Request
 
-| Field         | Content                        |
-| :------------ | :----------------------------- |
-| id            | ID of the request              |
-| jsonrpc       | "2.0"                          |
-| method        | "getjobtemplate"               |
-| params        | null                           |
+| Field   | Content           |
+| :------ | :---------------- |
+| id      | ID of the request |
+| jsonrpc | "2.0"             |
+| method  | "getjobtemplate"  |
+| params  | null              |
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"2",
    "jsonrpc":"2.0",
    "method":"getjobtemplate",
@@ -98,12 +100,12 @@ The response can be of two types:
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"0",
    "jsonrpc":"2.0",
    "method":"getjobtemplate",
-   "result":{  
+   "result":{
       "difficulty":1,
       "height":13726,
       "job_id":4,
@@ -116,21 +118,21 @@ Example:
 
 If the node is syncing, it will send the following message:
 
-| Field         | Content                                                   |
-| :------------ | :-------------------------------------------------------- |
-| id            | ID of the request                                         |
-| jsonrpc       | "2.0"                                                     |
-| method        | "getjobtemplate"                                          |
-| error         | {"code":-32701,"message":"Node is syncing - Please wait"} |
+| Field   | Content                                                   |
+| :------ | :-------------------------------------------------------- |
+| id      | ID of the request                                         |
+| jsonrpc | "2.0"                                                     |
+| method  | "getjobtemplate"                                          |
+| error   | {"code":-32701,"message":"Node is syncing - Please wait"} |
 
 Example:
 
 ```JSON
-{  
+{
    "id":"10",
    "jsonrpc":"2.0",
    "method":"getjobtemplate",
-   "error":{  
+   "error":{
       "code":-32000,
       "message":"Node is syncing - Please wait"
    }
@@ -145,21 +147,21 @@ The miner SHOULD interrupt current job if job_id = 0, and SHOULD replace the cur
 
 #### Request
 
-| Field         | Content                                                                   |
-| :------------ | :------------------------------------------------------------------------- |
-| id            | ID of the request                                                         |
-| jsonrpc       | "2.0"                                                                     |
-| method        | "job"                                                                     |
-| params        | Int `difficulty`, `height`, `job_id` and string `pre_pow` |
+| Field   | Content                                                   |
+| :------ | :-------------------------------------------------------- |
+| id      | ID of the request                                         |
+| jsonrpc | "2.0"                                                     |
+| method  | "job"                                                     |
+| params  | Int `difficulty`, `height`, `job_id` and string `pre_pow` |
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"Stratum",
    "jsonrpc":"2.0",
    "method":"job",
-   "params":{  
+   "params":{
       "difficulty":1,
       "height":16375,
       "job_id":5,
@@ -178,17 +180,17 @@ A message initiated by the miner in order to keep the connection alive.
 
 #### Request
 
-| Field         | Content                |
-| :------------ | :--------------------- |
-| id            | ID of the request      |
-| jsonrpc       | "2.0"                  |
-| method        | "keepalive"            |
-| params        | null                   |
+| Field   | Content           |
+| :------ | :---------------- |
+| id      | ID of the request |
+| jsonrpc | "2.0"             |
+| method  | "keepalive"       |
+| params  | null              |
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"2",
    "jsonrpc":"2.0",
    "method":"keepalive",
@@ -198,18 +200,18 @@ Example:
 
 #### Response
 
-| Field         | Content                        |
-| :------------ | :----------------------------- |
-| id            | ID of the request              |
-| jsonrpc       | "2.0"                          |
-| method        | "keepalive"                    |
-| result        | "ok"                           |
-| error         | null                           |
+| Field   | Content           |
+| :------ | :---------------- |
+| id      | ID of the request |
+| jsonrpc | "2.0"             |
+| method  | "keepalive"       |
+| result  | "ok"              |
+| error   | null              |
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"2",
    "jsonrpc":"2.0",
    "method":"keepalive",
@@ -220,29 +222,29 @@ Example:
 
 ### `login`
 
-***
+---
 
 A message initiated by the miner.
 Miner can log in on a Kepler Stratum server with a login, password and agent (usually statically set by the miner program).
 
 #### Request
 
-| Field         | Content                        |
-| :------------ | :----------------------------- |
-| id            | ID of the request              |
-| jsonrpc       | "2.0"                          |
-| method        | "login"                        |
-| params        | Strings: login, pass and agent |
+| Field   | Content                        |
+| :------ | :----------------------------- |
+| id      | ID of the request              |
+| jsonrpc | "2.0"                          |
+| method  | "login"                        |
+| params  | Strings: login, pass and agent |
 
 Example:
 
-``` JSON
+```JSON
 
-{  
+{
    "id":"0",
    "jsonrpc":"2.0",
    "method":"login",
-   "params":{  
+   "params":{
       "login":"login",
       "pass":"password",
       "agent":"kepler-miner"
@@ -250,24 +252,25 @@ Example:
 }
 
 ```
+
 #### Response
 
 The response can be of two types:
 
 ##### OK response
 
-| Field         | Content                        |
-| :------------ | :----------------------------- |
-| id            | ID of the request              |
-| jsonrpc       | "2.0"                          |
-| method        | "login"                        |
-| result        | "ok"                           |
-| error         | null                           |
+| Field   | Content           |
+| :------ | :---------------- |
+| id      | ID of the request |
+| jsonrpc | "2.0"             |
+| method  | "login"           |
+| result  | "ok"              |
+| error   | null              |
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"1",
    "jsonrpc":"2.0",
    "method":"login",
@@ -287,17 +290,17 @@ This message allows a miner to get the status of its current worker and the netw
 
 #### Request
 
-| Field         | Content                |
-| :------------ | :--------------------- |
-| id            | ID of the request      |
-| jsonrpc       | "2.0"                  |
-| method        | "status"               |
-| params        | null                   |
+| Field   | Content           |
+| :------ | :---------------- |
+| id      | ID of the request |
+| jsonrpc | "2.0"             |
+| method  | "status"          |
+| params  | null              |
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"2",
    "jsonrpc":"2.0",
    "method":"status",
@@ -309,22 +312,22 @@ Example:
 
 The response is the following:
 
-| Field         | Content                                                                                                  |
-| :------------ | :------------------------------------------------------------------------------------------------------- |
-| id            | ID of the request                                                                                        |
-| jsonrpc       | "2.0"                                                                                                    |
-| method        | "status"                                                                                                 |
-| result        | String `id`. Integers `height`, `difficulty`, `accepted`, `rejected` and `stale` |
-| error         | null                                                                                                     |
+| Field   | Content                                                                          |
+| :------ | :------------------------------------------------------------------------------- |
+| id      | ID of the request                                                                |
+| jsonrpc | "2.0"                                                                            |
+| method  | "status"                                                                         |
+| result  | String `id`. Integers `height`, `difficulty`, `accepted`, `rejected` and `stale` |
+| error   | null                                                                             |
 
 Example:
 
 ```JSON
-{  
+{
    "id":"5",
    "jsonrpc":"2.0",
    "method":"status",
-   "result":{  
+   "result":{
       "id":"5",
       "height":13726,
       "difficulty":1,
@@ -345,16 +348,16 @@ When a miner find a share, it will submit it to the node.
 
 The miner submit a solution to a job to the Stratum server.
 
-| Field         | Content                                                                     |
-| :------------ | :-------------------------------------------------------------------------- |
-| id            | ID of the request                                                           |
-| jsonrpc       | "2.0"                                                                       |
-| method        | "submit"                                                                    |
-| params        | Int `edge_bits`,`nonce`, `height`, `job_id` and array of integers `pow` |
+| Field   | Content                                                                 |
+| :------ | :---------------------------------------------------------------------- |
+| id      | ID of the request                                                       |
+| jsonrpc | "2.0"                                                                   |
+| method  | "submit"                                                                |
+| params  | Int `edge_bits`,`nonce`, `height`, `job_id` and array of integers `pow` |
 
 Example:
 
-``` JSON
+```JSON
 {
    "id":"0",
    "jsonrpc":"2.0",
@@ -364,7 +367,7 @@ Example:
       "height":16419,
       "job_id":0,
       "nonce":8895699060858340771,
-      "pow":[  
+      "pow":[
          4210040,10141596,13269632,24291934,28079062,84254573,84493890,100560174,100657333,120128285,130518226,140371663,142109188,159800646,163323737,171019100,176840047,191220010,192245584,198941444,209276164,216952635,217795152,225662613,230166736,231315079,248639876,263910393,293995691,298361937,326412694,330363619,414572127,424798984,426489226,466671748,466924466,490048497,495035248,496623057,502828197, 532838434
          ]
    }
@@ -379,18 +382,18 @@ The response can be of three types.
 
 The share is accepted by the Stratum but is not a valid cuck(at)oo solution at the network target difficulty.
 
-| Field         | Content                        |
-| :------------ | :----------------------------- |
-| id            | ID of the request              |
-| jsonrpc       | "2.0"                          |
-| method        | "submit"                       |
-| result        | "ok"                           |
-| error         | null                           |
+| Field   | Content           |
+| :------ | :---------------- |
+| id      | ID of the request |
+| jsonrpc | "2.0"             |
+| method  | "submit"          |
+| result  | "ok"              |
+| error   | null              |
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"2",
    "jsonrpc":"2.0",
    "method":"submit",
@@ -403,18 +406,18 @@ Example:
 
 The share is accepted by the Stratum and is a valid cuck(at)oo solution at the network target difficulty.
 
-| Field         | Content                        |
-| :------------ | :----------------------------- |
-| id            | ID of the request              |
-| jsonrpc       | "2.0"                          |
-| method        | "submit"                       |
-| result        | "block - " + hash of the block |
-| error         | null                           |
+| Field   | Content                        |
+| :------ | :----------------------------- |
+| id      | ID of the request              |
+| jsonrpc | "2.0"                          |
+| method  | "submit"                       |
+| result  | "block - " + hash of the block |
+| error   | null                           |
 
 Example:
 
-``` JSON
-{  
+```JSON
+{
    "id":"6",
    "jsonrpc":"2.0",
    "method":"submit",
@@ -431,21 +434,21 @@ The error response can be of two types: stale and rejected.
 
 The share is a valid solution to a previous job not the current one.
 
-| Field         | Content                                                   |
-| :------------ | :-------------------------------------------------------- |
-| id            | ID of the request                                         |
-| jsonrpc       | "2.0"                                                     |
-| method        | "submit"                                          |
-| error         | {"code":-32503,"message":"Solution submitted too late"} |
+| Field   | Content                                                 |
+| :------ | :------------------------------------------------------ |
+| id      | ID of the request                                       |
+| jsonrpc | "2.0"                                                   |
+| method  | "submit"                                                |
+| error   | {"code":-32503,"message":"Solution submitted too late"} |
 
 Example:
 
 ```JSON
-{  
+{
    "id":"5",
    "jsonrpc":"2.0",
    "method":"submit",
-   "error":{  
+   "error":{
       "code":-32503,
       "message":"Solution submitted too late"
    }
@@ -460,21 +463,21 @@ Two possibilities: the solution cannot be validated or the solution is of too lo
 
 The submitted solution cannot be validated.
 
-| Field         | Content                                                   |
-| :------------ | :-------------------------------------------------------- |
-| id            | ID of the request                                         |
-| jsonrpc       | "2.0"                                                     |
-| method        | "submit"                                          |
-| error         | {"code":-32502,"message":"Failed to validate solution"} |
+| Field   | Content                                                 |
+| :------ | :------------------------------------------------------ |
+| id      | ID of the request                                       |
+| jsonrpc | "2.0"                                                   |
+| method  | "submit"                                                |
+| error   | {"code":-32502,"message":"Failed to validate solution"} |
 
 Example:
 
 ```JSON
-{  
+{
    "id":"5",
    "jsonrpc":"2.0",
    "method":"submit",
-   "error":{  
+   "error":{
       "code":-32502,
       "message":"Failed to validate solution"
    }
@@ -485,21 +488,21 @@ Example:
 
 The submitted solution is of too low difficulty.
 
-| Field         | Content                                                          |
-| :------------ | :--------------------------------------------------------------- |
-| id            | ID of the request                                                |
-| jsonrpc       | "2.0"                                                            |
-| method        | "submit"                                                         |
-| error         | {"code":-32501,"message":"Share rejected due to low difficulty"} |
+| Field   | Content                                                          |
+| :------ | :--------------------------------------------------------------- |
+| id      | ID of the request                                                |
+| jsonrpc | "2.0"                                                            |
+| method  | "submit"                                                         |
+| error   | {"code":-32501,"message":"Share rejected due to low difficulty"} |
 
 Example:
 
 ```JSON
-{  
+{
    "id":"5",
    "jsonrpc":"2.0",
    "method":"submit",
-   "error":{  
+   "error":{
       "code":-32501,
       "message":"Share rejected due to low difficulty"
    }
@@ -510,15 +513,15 @@ Example:
 
 Kepler Stratum protocol implementation contains the following error message:
 
-| Error code  | Error Message                          |
-| :---------- | :------------------------------------- |
-| -32000      | Node is syncing - please wait          |
-| -32500      | Login first                            |
-| -32501      | Share rejected due to low difficulty   |
-| -32502      | Failed to validate solution            |
-| -32503      | Solution Submitted too late            |
-| -32600      | Invalid Request                        |
-| -32601      | Method not found                       |
+| Error code | Error Message                        |
+| :--------- | :----------------------------------- |
+| -32000     | Node is syncing - please wait        |
+| -32500     | Login first                          |
+| -32501     | Share rejected due to low difficulty |
+| -32502     | Failed to validate solution          |
+| -32503     | Solution Submitted too late          |
+| -32600     | Invalid Request                      |
+| -32601     | Method not found                     |
 
 ## Miner behavior
 

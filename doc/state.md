@@ -1,5 +1,7 @@
 # State and Storage
 
+_Read this in other languages: [Korean](state_KR.md), [日本語](state_JP.md)._
+
 ## The Kepler State
 
 ### Structure
@@ -10,7 +12,7 @@ The full state of a Kepler chain consists of all the following data:
 1. The range proof for each output.
 1. All the transaction kernels.
 1. A MMR for each of the above (with the exception that the output MMR includes
-   hashes for *all* outputs, not only the unspent ones).
+   hashes for _all_ outputs, not only the unspent ones).
 
 In addition, all headers in the chain are required to anchor the above state
 with a valid proof of work (the state corresponds to the most worked chain).
@@ -38,10 +40,10 @@ With a full Kepler state, we can validate the following:
 The data used to produce the hashes for leaf nodes in each MMR (in addition to
 their position is the following:
 
-* The output MMR hashes the feature field and the commitments of all outputs
+- The output MMR hashes the feature field and the commitments of all outputs
   since genesis.
-* The range proof MMR hashes the whole range proof data.
-* The kernel MMR hashes all fields of the kernel: feature, fee, lock height,
+- The range proof MMR hashes the whole range proof data.
+- The kernel MMR hashes all fields of the kernel: feature, fee, lock height,
   excess commitment and excess signature.
 
 Note that all outputs, range proofs and kernels are added in their respective
