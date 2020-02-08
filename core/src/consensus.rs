@@ -143,6 +143,9 @@ pub const HARD_FORK_INTERVAL: u64 = YEAR_HEIGHT / 2;
 /// And add another week to merge and test grin's new code
 pub const HARD_FORK_ADJUST_HEIGHT: u64 = 50 * DAY_HEIGHT + WEEK_HEIGHT;
 
+/// v2 need to delay a month to hard fork
+pub const HARD_FORK_DELAY_HEIGHT_V2: u64 = 30 * DAY_HEIGHT;
+
 /// Floonet first hard fork height, set to happen around 2019-06-20
 pub const FLOONET_FIRST_HARD_FORK: u64 = 185_040;
 
@@ -167,7 +170,7 @@ pub fn valid_header_version(height: u64, version: HeaderVersion) -> bool {
 			let adjusted_height = height + HARD_FORK_ADJUST_HEIGHT;
 			if adjusted_height < HARD_FORK_INTERVAL {
 				version == HeaderVersion::default()
-			} else if adjusted_height < 2 * HARD_FORK_INTERVAL {
+			} else if adjusted_height < 2 * HARD_FORK_INTERVAL + HARD_FORK_DELAY_HEIGHT_V2 {
 				version == HeaderVersion::new(2)
 			// uncomment branches one by one as we go from hard fork to hard fork
 			/*} else if height < 3 * HARD_FORK_INTERVAL {

@@ -659,7 +659,7 @@ fn hard_forks() {
 			HeaderVersion::new(3)
 		));
 		assert!(!hard_fork_adjust_height_valid_header_version(
-			YEAR_HEIGHT,
+			YEAR_HEIGHT + HARD_FORK_DELAY_HEIGHT_V2,
 			HeaderVersion::new(2)
 		));
 		assert!(!hard_fork_adjust_height_valid_header_version(
@@ -671,7 +671,7 @@ fn hard_forks() {
 			HeaderVersion::new(2)
 		));
 		assert!(!hard_fork_adjust_height_valid_header_version(
-			YEAR_HEIGHT + 1,
+			YEAR_HEIGHT + HARD_FORK_DELAY_HEIGHT_V2 + 1,
 			HeaderVersion::new(2)
 		));
 	}
